@@ -18,26 +18,34 @@ export type AnkonnectDefOptions = {
 
 export default class Ankonnect {
 	private options: AnkonnectDefOptions = {
-		baseUrl: 'https://haapi.ankama.com',
+		baseUrl: 'https://haapi.ankama.com/json/Ankama/v2',
 		userAgent: UserAgent.getRandomUserAgent(),
 		lang: 'fr',
 		proxy: null,
 	};
 	public Api: Api;
 	
-	public constructor(options: AnkonnectOptions) {
-		this.options = {...this.options, ...options}; // TODO fix ?
-		this.options.proxy = this.initProxy();
+	public constructor(options?: AnkonnectOptions) {
+		const opts = {
+			baseUrl: options && options.baseUrl ? options.baseUrl : this.options.baseUrl,
+			userAgent: options && options.userAgent ? options.userAgent : this.options.userAgent,
+			lang: options && options.lang ? options.lang : this.options.lang,
+			proxy: this.initProxy(options ? options.proxy : null),
+		}
+		this.options = opts;
 		this.Api = new Api(this.options);
 	}
 	
-	private initProxy(): url.URL | null {
-		let proxy = null;
-		if (typeof this.options.proxy === 'string') {
-			proxy = new url.URL(this.options.proxy)
-		} else if (this.options.proxy instanceof url.URL) {
-			proxy = this.options.proxy;
+	private initProxy(proxy: any): url.URL | null {
+		if (typeof proxy === 'string') {
+			return new url.URL(proxy)
+		} else if (proxy instanceof url.URL) {
+			return proxy;
 		}
-		return proxy;
+		return null;
+	}
+
+	public getOptions(): AnkonnectDefOptions {
+		return this.options;
 	}
 }

@@ -1,5 +1,5 @@
 import * as endpoints from '../endpoints';
-import Request, { Headers } from '../Request';
+import Request from '../Request';
 
 export type CreateApiKeyRequest = {
     login: string;
@@ -13,7 +13,7 @@ export default class Api extends Request {
         if (params.long_life_token === undefined) {
             params.long_life_token = false;
         }
-        this.init('POST', endpoint)
+        return this.init('POST', endpoint)
         .addParams(params)
         .run();
     }

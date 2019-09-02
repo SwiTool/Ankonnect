@@ -66,9 +66,9 @@ export default class UserAgent {
     private constructor() {}
 
     public static getRandomUserAgent() : string {
-        const rndVersion = this.androidVersions[Math.random()*this.androidVersions.length];
-        const rndDevice = this.androidDevices[Math.random()*this.androidDevices.length];
-        const rndChromeVersion = this.chromeVersions[Math.random()*this.chromeVersions.length];
+        const rndVersion = this.androidVersions[~~(Math.random()*this.androidVersions.length)];
+        const rndDevice = this.androidDevices[~~(Math.random()*this.androidDevices.length)];
+        const rndChromeVersion = this.chromeVersions[~~(Math.random()*this.chromeVersions.length)];
         return `Mozilla/5.0 (Linux; Android ${rndVersion}; ${rndDevice}) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/${rndChromeVersion} Mobile Safari/537.36`;
     }
 }

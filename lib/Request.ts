@@ -25,10 +25,11 @@ export default class Request {
 
     protected init(method: SupportedMethod, endpoint: string): Request {
         this.method = method;
-        this.command = `curl --compressed -X ${method} ${this.options.baseUrl}${endpoint}`;
+        this.command = `curl --compressed -i -X ${method} ${this.options.baseUrl}${endpoint}`;
         this.command += ` ${this.getCurlProxyParam()}`;
         this.addHeader('user-agent', this.options.userAgent);
         this.addHeader('accept-language', this.options.lang);
+        this.addHeader('content-type', 'text/plain;charset=UTF-8');
         this.addHeader('accept', 'application/json');
         return this;
     }
@@ -62,6 +63,7 @@ export default class Request {
     public async run(): Promise<Response> {
         if (this.command.indexOf('curl') === -1) throw new Error('You must init first with init method.');
         this.buildParams();
+        console.log(this.command);
         return new Promise((resolve, reject) => {
             exec(this.command, (err: any, stdout: string) => {
                 err ? reject(err) : resolve(this.validateRequest(stdout))
@@ -74,10 +76,10 @@ export default class Request {
         if (!params.length) return;
         switch (this.method) {
             case 'GET':
-                this.command += ` --data ${params}`;
+                this.command += ` --data "${params}"`;
                 break;
             case 'POST':
-                this.command += ` --data-binary ${params}`;
+                this.command += ` --data-binary "${params}"`;
                 break;
         }
     }
@@ -119,6 +121,7 @@ export default class Request {
           response.body = JSON.parse(rawResp);
         } catch (e) {
           console.error(e);
+          console.error(rawResp);
           throw new Error(rawResp);
         }
         const rb = response.body;
