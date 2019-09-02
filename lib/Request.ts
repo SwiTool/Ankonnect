@@ -14,14 +14,17 @@ export default class Request {
     protected options: AnkonnectDefOptions;
     protected command: string;
     protected params: Record<string, string>;
+    protected method: SupportedMethod;
 
     constructor(options: AnkonnectDefOptions) {
         this.options = options;
         this.command = '';
         this.params = {}
+        this.method = 'GET';
     }
 
     protected init(method: SupportedMethod, endpoint: string): Request {
+        this.method = method;
         this.command = `curl --compressed -X ${method} ${this.options.baseUrl}${endpoint}`;
         this.command += ` ${this.getCurlProxyParam()}`;
         this.addHeader('user-agent', this.options.userAgent);
@@ -43,13 +46,51 @@ export default class Request {
         return this;
     }
 
+    public addParam(paramName: string, paramValue: any) {
+        this.params[paramName] = paramValue;
+        return this;
+    }
+
+    public addParams(params: Body) {
+        for (const paramName in params) {
+            const paramValue = params[paramName];
+            this.addParam(paramName, paramValue);
+        }
+        return this;
+    }
+
     public async run(): Promise<Response> {
         if (this.command.indexOf('curl') === -1) throw new Error('You must init first with init method.');
+        this.buildParams();
         return new Promise((resolve, reject) => {
             exec(this.command, (err: any, stdout: string) => {
                 err ? reject(err) : resolve(this.validateRequest(stdout))
             });
         });
+    }
+
+    private buildParams(): void {
+        const params = this.serializeParams();
+        if (!params.length) return;
+        switch (this.method) {
+            case 'GET':
+                this.command += ` --data ${params}`;
+                break;
+            case 'POST':
+                this.command += ` --data-binary ${params}`;
+                break;
+        }
+    }
+
+    private serializeParams(): string {
+        let serialized = '';
+        let first = true;
+        for (const paramName in this.params) {
+            const paramValue = this.params[paramName];
+            serialized += (first ? '' : '&') + `${paramName}=${paramValue}`;
+            first = false;
+        }
+        return serialized;
     }
 
     private validateRequest<K>(stdout: string) {

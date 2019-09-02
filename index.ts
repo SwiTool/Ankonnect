@@ -26,7 +26,7 @@ export default class Ankonnect {
 	public Api: Api;
 	
 	public constructor(options: AnkonnectOptions) {
-		this.options = {...options, ...this.options};
+		this.options = {...this.options, ...options}; // TODO fix ?
 		this.options.proxy = this.initProxy();
 		this.Api = new Api(this.options);
 	}
