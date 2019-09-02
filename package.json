@@ -1,0 +1,26 @@
+{
+  "name": "ankonnect",
+  "version": "1.0.0",
+  "description": "Don't waste your time connecting to Ankama APIs...",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwiTool/Ankonnect.git"
+  },
+  "keywords": [
+    "ankama",
+    "api"
+  ],
+  "author": "SwiTool",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/SwiTool/Ankonnect/issues"
+  },
+  "homepage": "https://github.com/SwiTool/Ankonnect#readme",
+  "devDependencies": {
+    "@types/node": "^12.7.3"
+  }
+}
