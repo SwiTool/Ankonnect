@@ -1,20 +1,30 @@
 import * as endpoints from '../endpoints';
 import Request from '../Request';
-
-export type CreateApiKeyRequest = {
-    login: string;
-    password: string;
-    long_life_token?: boolean;
-}
+import { CreateApiKeyRequest, CreateApiKeyResponse } from '../types/CreateApiKey'
+import { CreateTokenRequest, CreateTokenResponse } from '../types/CreateToken'
 
 export default class Api extends Request {
-    public createApiKey(params: CreateApiKeyRequest) {
-        const endpoint = endpoints.EP_CREATE_API_KEY;
+    public async createApiKey(params: CreateApiKeyRequest) {
         if (params.long_life_token === undefined) {
             params.long_life_token = false;
         }
-        return this.init('POST', endpoint)
+        const response = await this.init('POST', endpoints.EP_CREATE_API_KEY)
         .addParams(params)
-        .run();
+        .run<CreateApiKeyResponse>();
+        if (response.statusCode !== 200) {
+            throw new Error(response.body.reason);
+        }
+    }
+
+    public async createToken(params: CreateTokenRequest, haapiKey: string) {
+        const response = await this.init('GET', endpoints.EP_CREATE_TOKEN)
+        .addParams(params)
+        .addHeader('apikey', haapiKey)
+        .run<CreateTokenResponse>();
+        if (response.statusCode !== 200) {
+            console.error(response);
+            // TODO: don't know what is returned here
+            throw new Error('UNKOWN ERROR');
+        }
     }
 }
