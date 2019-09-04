@@ -1,8 +1,8 @@
 export type CreateTokenRequest = {
     game: number;
-}
-
-export type CreateTokenResponse = {
-    username: string;
+  };
+  
+  export type CreateTokenResponse = {
     token: string;
-}
+  };
+  
