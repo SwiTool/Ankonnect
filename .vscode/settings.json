@@ -1,0 +1,14 @@
+{
+  "editor.tabSize": 2,
+  "eslint.autoFixOnSave": true,
+  "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    {
+      "language": "typescript",
+      "autoFix": true
+    }
+  ],
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.rulers": [80, 120]
+}
