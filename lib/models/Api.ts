@@ -19,7 +19,7 @@ export default class Api extends Request {
 
   public async createToken(params: CreateTokenRequest, haapiKey: string) {
     const response = await this.init("GET", endpoints.EP_CREATE_TOKEN)
-      .addQueries(params)
+      .addParams(params)
       .addHeader("apikey", haapiKey)
       .run<CreateTokenResponse>();
     if (response.statusCode !== 200) {

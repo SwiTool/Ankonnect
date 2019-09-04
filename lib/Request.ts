@@ -16,6 +16,7 @@ export default class Request {
   protected params: Record<string, string | boolean | number>;
   protected qs: Record<string, string | boolean | number>;
   protected method: SupportedMethod;
+  protected endpoint: string;
 
   constructor(options: AnkonnectDefOptions) {
     this.options = options;
@@ -23,11 +24,13 @@ export default class Request {
     this.params = {};
     this.qs = {};
     this.method = "GET";
+    this.endpoint = "";
   }
 
   protected init(method: SupportedMethod, endpoint: string): Request {
     this.method = method;
-    this.command = `curl --compressed -i -X ${method} ${this.options.baseUrl}${endpoint}`;
+    this.endpoint = endpoint;
+    this.command = `curl --compressed -i`;
     this.command += ` ${this.getCurlProxyParam()}`;
     this.addHeader("user-agent", this.options.userAgent);
     this.addHeader("accept-language", this.options.lang);
@@ -49,11 +52,6 @@ export default class Request {
     return this;
   }
 
-  public addQuery(paramName: string, paramValue: string | boolean | number) {
-    this.qs[paramName] = paramValue;
-    return this;
-  }
-
   public addParam(paramName: string, paramValue: string | boolean | number) {
     this.params[paramName] = paramValue;
     return this;
@@ -67,6 +65,11 @@ export default class Request {
     return this;
   }
 
+  public addQuery(paramName: string, paramValue: string | boolean | number) {
+    this.qs[paramName] = paramValue;
+    return this;
+  }
+
   public addQueries(params: Body) {
     for (const paramName in params) {
       const paramValue = params[paramName];
@@ -75,65 +78,48 @@ export default class Request {
     return this;
   }
 
+  public buildUrl() {
+    this.command += ` ${this.options.baseUrl}${this.endpoint}`;
+    let first = true;
+    for (const qName in this.qs) {
+      const qValue = this.qs[qName];
+      this.command += `${first ? "?" : "&"}${qName}=${qValue}`;
+      first = false;
+    }
+  }
+
   public async run<T>(): Promise<Response<T>> {
-    if (this.command.indexOf("curl") === -1)
+    if (this.command.indexOf("curl") === -1) {
       throw new Error("You must init first with init method.");
+    }
     this.buildParams();
-    this.buildQuery();
+    this.buildUrl();
     console.log(this.command);
     return new Promise((resolve, reject) => {
       exec(this.command, (err, stdout) => {
+        this.command = "";
         err ? reject(err) : resolve(this.validateRequest(stdout));
       });
     });
   }
 
   private buildParams(): void {
-    const params = this.serializeParams();
-    if (!params.length) return;
+    let dataParam = "";
     switch (this.method) {
       case "GET":
-        this.command += ` --data "${params}"`;
+        this.command += ` -G`;
+        dataParam = "--data";
         break;
       case "POST":
-        this.command += ` --data-binary "${params}"`;
+        dataParam = "--data-binary";
         break;
+      default:
+        dataParam = "--data";
     }
-  }
-
-  private buildQuery(): void {
-    const query = this.serializeQuery();
-    if (!query.length) return;
-    switch (this.method) {
-      case "GET":
-        this.command += ` -G -d "${query}"`;
-        break;
-      case "POST":
-        this.command += ` -d "${query}"`;
-        break;
-    }
-  }
-
-  private serializeQuery(): string {
-    let serialized = "";
-    let first = true;
-    for (const paramName in this.qs) {
-      const paramValue = this.qs[paramName];
-      serialized += (first ? "" : "&") + `${paramName}=${paramValue}`;
-      first = false;
-    }
-    return serialized;
-  }
-
-  private serializeParams(): string {
-    let serialized = "";
-    let first = true;
     for (const paramName in this.params) {
       const paramValue = this.params[paramName];
-      serialized += (first ? "" : "&") + `${paramName}=${paramValue}`;
-      first = false;
+      this.command += ` ${dataParam} "${paramName}=${paramValue}"`;
     }
-    return serialized;
   }
 
   private validateRequest<T>(stdout: string) {
