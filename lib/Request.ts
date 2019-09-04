@@ -27,6 +27,14 @@ export default class Request {
     this.endpoint = "";
   }
 
+  private clear() {
+    this.command = "";
+    this.params = {};
+    this.qs = {};
+    this.method = "GET";
+    this.endpoint = "";
+  }
+
   protected init(method: SupportedMethod, endpoint: string): Request {
     this.method = method;
     this.endpoint = endpoint;
@@ -97,7 +105,7 @@ export default class Request {
     console.log(this.command);
     return new Promise((resolve, reject) => {
       exec(this.command, (err, stdout) => {
-        this.command = "";
+        this.clear();
         err ? reject(err) : resolve(this.validateRequest(stdout));
       });
     });
