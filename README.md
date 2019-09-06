@@ -1,4 +1,5 @@
 ## Ankonnect ⚡️
+
 Don't waste your time connecting to Ankama APIs...
 
 - Description
@@ -28,14 +29,15 @@ Using yarn:
 ## Usage
 
 You just have to construct the Ankonnect and use the SDK.
+
 ```javascript
-import Ankonnect from 'ankonnect'
+import Ankonnect from "ankonnect";
 
 const ankonnect = new Ankonnect();
 const response = await ankonnect.Api.createApiKey({
-  login: 'myLogin',
-  password: '*******',
+  login: "myLogin",
+  password: "*******",
   long_life_token: true
 });
-console.log(response.body.key);
+console.log(response.key);
 ```

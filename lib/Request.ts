@@ -1,5 +1,9 @@
 import { exec } from "child_process";
 import { AnkonnectDefOptions } from "..";
+import { isGenericErrorBody, isLoginError } from "./helpers";
+import { CreateApiKeyErrorReasons } from "./types/CreateApiKey";
+import GenericError from "./errors/GenericError";
+import LoginError from "./errors/LoginError";
 
 type SupportedMethod = "GET" | "POST";
 export type Headers = Record<string, string>;
@@ -155,10 +159,18 @@ export default class Request {
         statusCode: statusCode,
         body: JSON.parse(rawResp)
       };
+      if (isGenericErrorBody(response.body)) {
+        throw new GenericError(response.body.message);
+      }
+      if (isLoginError(response.body)) {
+        throw new LoginError(response.body.reason);
+      }
       return response;
     } catch (e) {
-      console.error(e);
-      throw new Error(rawResp);
+      if (e instanceof SyntaxError) {
+        throw new SyntaxError(`${e.message}: ${rawResp}`);
+      }
+      throw e;
     }
   }
 

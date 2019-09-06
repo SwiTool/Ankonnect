@@ -1,25 +1,27 @@
 import Ankonnect from "../../index";
+import LoginError from "../errors/LoginError";
+import GenericError from "../errors/GenericError";
 
-test("should fail with FAILED reason", async () => {
+test("should fail with FAILED reason", () => {
   const ank = new Ankonnect();
   expect(
-    await ank.Api.createApiKey({
+    ank.Api.createApiKey({
       login: "test",
       password: "test",
       // eslint-disable-next-line @typescript-eslint/camelcase
       long_life_token: false
     })
-  ).toThrow();
+  ).rejects.toMatchObject(LoginError);
 });
 
-test("should fail", async () => {
+test("should fail", () => {
   const ank = new Ankonnect();
   expect(
-    await ank.Api.createToken(
+    ank.Api.createToken(
       {
         game: 18
       },
       "123"
     )
-  ).toThrow();
+  ).rejects.toMatchObject(GenericError);
 });

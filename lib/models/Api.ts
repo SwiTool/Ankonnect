@@ -11,10 +11,7 @@ export default class Api extends Request {
     const response = await this.init("POST", endpoints.EP_CREATE_API_KEY)
       .addParams(params)
       .run<CreateApiKeyResponse>();
-    if (response.statusCode !== 200) {
-      throw new Error(response.body.reason);
-    }
-    return response;
+    return response.body;
   }
 
   public async createToken(params: CreateTokenRequest, haapiKey: string) {
@@ -22,11 +19,6 @@ export default class Api extends Request {
       .addParams(params)
       .addHeader("apikey", haapiKey)
       .run<CreateTokenResponse>();
-    if (response.statusCode !== 200) {
-      console.error(response);
-      // TODO: don't know what is returned here
-      throw new Error("UNKOWN ERROR");
-    }
-    return response;
+    return response.body;
   }
 }
