@@ -3,7 +3,7 @@ import { AnkonnectDefOptions } from "..";
 import { isGenericErrorBody, isLoginError } from "./helpers";
 import GenericError from "./errors/GenericError";
 import LoginError from "./errors/LoginError";
-import debug from "debug";
+import debug from "./log";
 
 type SupportedMethod = "GET" | "POST";
 export type Headers = Record<string, string>;
