@@ -19,19 +19,18 @@ export type CreateApiKeyResponse = {
   refresh_token: string;
 };
 
-export enum CreateApiKeyErrorReasons {
-  "BAD_VERSION" = 1,
-  "WRONG_CREDENTIALS",
-  "BANNED",
-  "KICKED",
-  "IN_MAINTENANCE",
-  "TOO_MANY_ON_IP",
-  "TIME_OUT",
-  "BAD_IPRANGE",
-  "CREDENTIALS_RESET",
-  "EMAIL_UNVALIDATED",
-  "OTP_TIMEOUT",
-  "SERVICE_UNAVAILABLE",
-  "UNKNOWN_AUTH_ERROR",
-  "SPARE"
-}
+export type CreateApiKeyErrorReason =
+  | "FAILED"
+  | "BAN"
+  | "BRUTEFORCE"
+  | "NOTOKEN"
+  | "BLACKLIST"
+  | "LOCKED"
+  | "DELETED"
+  | "OTPTIMEFAILED"
+  | "MAILNOVALID"
+  | "BETACLOSED"
+  | "RESETANKAMA"
+  | "SECURITYCARD"
+  | "PARTNER"
+  | "NOACCOUNT";
