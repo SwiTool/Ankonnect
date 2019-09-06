@@ -1,9 +1,9 @@
 import { exec } from "child_process";
 import { AnkonnectDefOptions } from "..";
 import { isGenericErrorBody, isLoginError } from "./helpers";
-import { CreateApiKeyErrorReasons } from "./types/CreateApiKey";
 import GenericError from "./errors/GenericError";
 import LoginError from "./errors/LoginError";
+import debug from "debug";
 
 type SupportedMethod = "GET" | "POST";
 export type Headers = Record<string, string>;
@@ -106,7 +106,7 @@ export default class Request {
     }
     this.buildParams();
     this.buildUrl();
-    console.log(this.command);
+    debug(this.command);
     return new Promise((resolve, reject) => {
       exec(this.command, (err, stdout) => {
         this.clear();
@@ -160,14 +160,17 @@ export default class Request {
         body: JSON.parse(rawResp)
       };
       if (isGenericErrorBody(response.body)) {
+        debug(`${response.statusCode}: ${response.body.message}`);
         throw new GenericError(response.body.message);
       }
       if (isLoginError(response.body)) {
+        debug(`${response.statusCode}: ${response.body.reason}`);
         throw new LoginError(response.body.reason);
       }
       return response;
     } catch (e) {
       if (e instanceof SyntaxError) {
+        debug(`${rawResp}`);
         throw new SyntaxError(`${e.message}: ${rawResp}`);
       }
       throw e;

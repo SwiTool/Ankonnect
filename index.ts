@@ -1,6 +1,7 @@
 import url from "url";
 import UserAgent from "./lib/UserAgent";
 import Api from "./lib/models/Api";
+import Account from "./lib/models/Account";
 
 export type AnkonnectOptions = {
   baseUrl?: string;
@@ -24,6 +25,7 @@ export default class Ankonnect {
     proxy: null
   };
   public Api: Api;
+  public Account: Account;
 
   public constructor(options?: AnkonnectOptions) {
     const opts = {
@@ -38,6 +40,7 @@ export default class Ankonnect {
     };
     this.options = opts;
     this.Api = new Api(this.options);
+    this.Account = new Account(this.options);
   }
 
   private initProxy(
