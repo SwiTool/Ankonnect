@@ -110,7 +110,11 @@ export default class Request {
     return new Promise((resolve, reject) => {
       exec(this.command, (err, stdout) => {
         this.clear();
-        err ? reject(err) : resolve(this.validateRequest(stdout));
+        try {
+          err ? reject(err) : resolve(this.validateRequest(stdout));
+        } catch (e) {
+          reject(e);
+        }
       });
     });
   }

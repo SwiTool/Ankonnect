@@ -2,10 +2,11 @@
 
 Don't waste your time connecting to Ankama APIs...
 
-- Description
-- Dependencies
-- Installation
-- Usage
+- [Description](#description)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Docs](./docs)
 
 ## Description
 
@@ -28,7 +29,7 @@ Using yarn:
 
 ## Usage
 
-You just have to construct the Ankonnect and use the SDK.
+You have to construct the Ankonnect and use the SDK.
 
 ```javascript
 import Ankonnect from "ankonnect";
@@ -41,3 +42,5 @@ const response = await ankonnect.Api.createApiKey({
 });
 console.log(response.key);
 ```
+
+To find all the APIs, check the [Docs](./docs)
