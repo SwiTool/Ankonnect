@@ -12,7 +12,7 @@ You can give options to `Ankonnect` constructor, which is an object containing :
 | Key name  | Required |       Type        |                   Default                   |
 | --------- | :------: | :---------------: | :-----------------------------------------: |
 | userAgent |    ❌    |     `string`      |                  (random)                   |
-| proxy     |    ❌    | `string` \| `URL` |                    null                     |
+| proxy     |    ❌    | `string` \| `URL` |                                             |
 | lang      |    ❌    |     `string`      |                   `"fr"`                    |
 | baseUrl   |    ❌    |     `string`      | `"https://haapi.ankama.com/json/Ankama/v2"` |
 
@@ -21,10 +21,10 @@ You can give options to `Ankonnect` constructor, which is an object containing :
 Once you have your constructed `Ankonnect`, you have acces to :
 
 - `Api`:
-- - `createApiKey`
+- - [`createApiKey`](#createapikey)
 - `Account`:
-- - `createToken`
-- - `createGuest`
+- - [`createToken`](#createToken)
+- - [`createGuest`](#createGuest)
 
 ⚠ All async methods can throw errors, be aware to catch :
 
@@ -74,7 +74,7 @@ Create an Api key, which is the equivalent to an access token, that will be need
 Example:
 
 ```javascript
-const res = ank.Api.createApiKey({
+const res = await ank.Api.createApiKey({
   login: "myLogin";
   password: "myPassword";
   long_life_token: false;
@@ -111,7 +111,7 @@ Create a token to access the game
 Example:
 
 ```javascript
-const res = ank.Account.createToken({
+const res = await ank.Account.createToken({
   game: 18;
 }, "haapiKeyFromCreateApiKey");
 console.log(res.token);
@@ -163,7 +163,7 @@ Create a guest account for the game
 Example:
 
 ```javascript
-const res = ank.Account.createGuest({
+const res = await ank.Account.createGuest({
   game: 18;
   lang: "fr",
   captcha_token: "getItFromACaptchaSolver"
