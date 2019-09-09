@@ -25,6 +25,7 @@ Once you have your constructed `Ankonnect`, you have acces to :
 - `Account`:
 - - [`createToken`](#createToken)
 - - [`createGuest`](#createGuest)
+- - [`validateGuest`](#validateGuest)
 
 ⚠ All async methods can throw errors, be aware to catch :
 
@@ -169,4 +170,54 @@ const res = await ank.Account.createGuest({
   captcha_token: "getItFromACaptchaSolver"
 });
 console.log(res.login, res.password);
+```
+
+#### validateGuest
+
+Validate a guest account
+
+🏳 Parameters: (ValidateGuestRequest `options`)
+
+- options: ValidateGuestRequest:
+
+```typescript
+{
+  lang: string;
+  guestAccountId: number;
+  guestLogin: string;
+  guestPassword: string;
+  login: string;
+  password: string;
+  email: string;
+  parentEmail: string;
+  birthDateTimestamp: number;
+  nickname: string;
+}
+```
+
+⏪ Returns: ValidateGuestResponse:
+
+```typescript
+{
+  _headers: {
+    duration: number;
+  }
+}
+```
+
+Example:
+
+```javascript
+const res = await ank.Account.validateGuest({
+  lang: "fr";
+  guestAccountId: 123456789;
+  guestLogin: "[GUEST]cceb441f";
+  guestPassword: "**********";
+  login: "myFutureLoginName";
+  password: "myFuturePassword";
+  email: "myFutureEmail";
+  parentEmail: "parentEmailIfNeeded";
+  birthDateTimestamp: 400030000;
+  nickname: "accountNickname";
+});
 ```
