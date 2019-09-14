@@ -1,4 +1,4 @@
-import url from "url";
+import * as url from "url";
 import UserAgent from "./lib/UserAgent";
 import Api from "./lib/models/Api";
 import Account from "./lib/models/Account";
