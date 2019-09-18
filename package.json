@@ -1,6 +1,6 @@
 {
   "name": "ankonnect",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Don't waste your time connecting to Ankama APIs...",
   "main": "dist/index.js",
   "scripts": {
