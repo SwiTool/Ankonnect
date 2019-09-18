@@ -171,13 +171,15 @@ export default class Request {
         statusCode: statusCode,
         body: this.returnAsJson ? JSON.parse(rawResp) : rawResp
       };
-      if (isGenericErrorBody(response.body)) {
-        debug(`${response.statusCode}: ${response.body.message}`);
-        throw new GenericError(response.body.message);
-      }
-      if (isLoginError(response.body)) {
-        debug(`${response.statusCode}: ${response.body.reason}`);
-        throw new LoginError(response.body.reason);
+      if (this.returnAsJson) {
+        if (isGenericErrorBody(response.body)) {
+          debug(`${response.statusCode}: ${response.body.message}`);
+          throw new GenericError(response.body.message);
+        }
+        if (isLoginError(response.body)) {
+          debug(`${response.statusCode}: ${response.body.reason}`);
+          throw new LoginError(response.body.reason);
+        }
       }
       return response;
     } catch (e) {
