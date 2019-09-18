@@ -44,10 +44,10 @@ export default class Request {
     this.endpoint = endpoint;
     this.command = `curl --tlsv1.1 -i`;
     this.command += ` ${this.getCurlProxyParam()}`;
-    this.addHeader("user-agent", this.options.userAgent);
     this.addHeader("accept-language", this.options.lang);
-    this.addHeader("content-type", "text/plain;charset=UTF-8");
-    this.addHeader("accept", "application/json");
+    this.addHeader("user-agent", this.options.userAgent);
+    //this.addHeader("content-type", "text/plain;charset=UTF-8");
+    //this.addHeader("accept", "application/json");
     return this;
   }
 

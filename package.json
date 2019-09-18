@@ -4,7 +4,8 @@
   "description": "Don't waste your time connecting to Ankama APIs...",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "publish": "tsc --outDir dist && npm publish"
   },
   "repository": {
     "type": "git",
