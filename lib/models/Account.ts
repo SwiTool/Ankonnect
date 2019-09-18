@@ -17,7 +17,7 @@ export default class Account extends Request {
   }
 
   public async validateGuest(params: ValidateGuestRequest) {
-    const response = await this.init("GET", endpoints.EP_VALIDATE_GUEST)
+    const response = await this.init("POST", endpoints.EP_VALIDATE_GUEST)
       .addParams(params)
       .run<ValidateGuestResponse>();
     return response.body;
