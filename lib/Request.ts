@@ -42,7 +42,7 @@ export default class Request {
   protected init(method: SupportedMethod, endpoint: string): Request {
     this.method = method;
     this.endpoint = endpoint;
-    this.command = `curl --tlsv1.1 --compressed -i`;
+    this.command = `curl --tlsv1.1 -i`;
     this.command += ` ${this.getCurlProxyParam()}`;
     this.addHeader("user-agent", this.options.userAgent);
     this.addHeader("accept-language", this.options.lang);
