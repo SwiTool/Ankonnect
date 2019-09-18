@@ -187,13 +187,15 @@ var Request = /** @class */ (function () {
                 statusCode: statusCode,
                 body: this.returnAsJson ? JSON.parse(rawResp) : rawResp
             };
-            if (helpers_1.isGenericErrorBody(response.body)) {
-                log_1.default(response.statusCode + ": " + response.body.message);
-                throw new GenericError_1.default(response.body.message);
-            }
-            if (helpers_1.isLoginError(response.body)) {
-                log_1.default(response.statusCode + ": " + response.body.reason);
-                throw new LoginError_1.default(response.body.reason);
+            if (this.returnAsJson) {
+                if (helpers_1.isGenericErrorBody(response.body)) {
+                    log_1.default(response.statusCode + ": " + response.body.message);
+                    throw new GenericError_1.default(response.body.message);
+                }
+                if (helpers_1.isLoginError(response.body)) {
+                    log_1.default(response.statusCode + ": " + response.body.reason);
+                    throw new LoginError_1.default(response.body.reason);
+                }
             }
             return response;
         }

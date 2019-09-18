@@ -21,7 +21,6 @@ export default class Request {
   protected qs: Record<string, string | boolean | number>;
   protected method: SupportedMethod;
   protected endpoint: string;
-  protected returnAsJson: boolean;
 
   constructor(options: AnkonnectDefOptions) {
     this.options = options;
@@ -30,7 +29,6 @@ export default class Request {
     this.qs = {};
     this.method = "GET";
     this.endpoint = "";
-    this.returnAsJson = false;
   }
 
   private clear() {
@@ -39,7 +37,6 @@ export default class Request {
     this.qs = {};
     this.method = "GET";
     this.endpoint = "";
-    this.returnAsJson = false;
   }
 
   protected init(method: SupportedMethod, endpoint: string): Request {
@@ -51,11 +48,6 @@ export default class Request {
     this.addHeader("user-agent", this.options.userAgent);
     //this.addHeader("content-type", "text/plain;charset=UTF-8");
     //this.addHeader("accept", "application/json");
-    return this;
-  }
-
-  public asJson() {
-    this.returnAsJson = true;
     return this;
   }
 
@@ -169,17 +161,15 @@ export default class Request {
       const response: Response<T> = {
         headers: headers,
         statusCode: statusCode,
-        body: this.returnAsJson ? JSON.parse(rawResp) : rawResp
+        body: JSON.parse(rawResp)
       };
-      if (this.returnAsJson) {
-        if (isGenericErrorBody(response.body)) {
-          debug(`${response.statusCode}: ${response.body.message}`);
-          throw new GenericError(response.body.message);
-        }
-        if (isLoginError(response.body)) {
-          debug(`${response.statusCode}: ${response.body.reason}`);
-          throw new LoginError(response.body.reason);
-        }
+      if (isGenericErrorBody(response.body)) {
+        debug(`${response.statusCode}: ${response.body.message}`);
+        throw new GenericError(response.body.message);
+      }
+      if (isLoginError(response.body)) {
+        debug(`${response.statusCode}: ${response.body.reason}`);
+        throw new LoginError(response.body.reason);
       }
       return response;
     } catch (e) {
