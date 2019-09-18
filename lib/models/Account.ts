@@ -10,6 +10,7 @@ import {
 export default class Account extends Request {
   public async createGuest(params: CreateGuestRequest) {
     const response = await this.init("GET", endpoints.EP_CREATE_GUEST)
+      .asJson()
       .addParams(params)
       .run<CreateGuestResponse>();
     response.body.password = response.headers["x-password"];
@@ -25,6 +26,7 @@ export default class Account extends Request {
 
   public async createToken(params: CreateTokenRequest, haapiKey: string) {
     const response = await this.init("GET", endpoints.EP_CREATE_TOKEN)
+      .asJson()
       .addParams(params)
       .addHeader("apikey", haapiKey)
       .run<CreateTokenResponse>();

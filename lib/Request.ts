@@ -21,6 +21,7 @@ export default class Request {
   protected qs: Record<string, string | boolean | number>;
   protected method: SupportedMethod;
   protected endpoint: string;
+  protected returnAsJson: boolean;
 
   constructor(options: AnkonnectDefOptions) {
     this.options = options;
@@ -29,6 +30,7 @@ export default class Request {
     this.qs = {};
     this.method = "GET";
     this.endpoint = "";
+    this.returnAsJson = false;
   }
 
   private clear() {
@@ -37,6 +39,7 @@ export default class Request {
     this.qs = {};
     this.method = "GET";
     this.endpoint = "";
+    this.returnAsJson = false;
   }
 
   protected init(method: SupportedMethod, endpoint: string): Request {
@@ -48,6 +51,11 @@ export default class Request {
     this.addHeader("user-agent", this.options.userAgent);
     //this.addHeader("content-type", "text/plain;charset=UTF-8");
     //this.addHeader("accept", "application/json");
+    return this;
+  }
+
+  public asJson() {
+    this.returnAsJson = true;
     return this;
   }
 
@@ -161,7 +169,7 @@ export default class Request {
       const response: Response<T> = {
         headers: headers,
         statusCode: statusCode,
-        body: JSON.parse(rawResp)
+        body: this.returnAsJson ? JSON.parse(rawResp) : rawResp
       };
       if (isGenericErrorBody(response.body)) {
         debug(`${response.statusCode}: ${response.body.message}`);

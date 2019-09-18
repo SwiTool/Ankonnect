@@ -87,7 +87,7 @@ var Account = /** @class */ (function (_super) {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_VALIDATE_GUEST)
+                    case 0: return [4 /*yield*/, this.init("POST", endpoints.EP_VALIDATE_GUEST)
                             .addParams(params)
                             .run()];
                     case 1:
