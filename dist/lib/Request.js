@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -64,10 +65,10 @@ var Request = /** @class */ (function () {
         this.endpoint = endpoint;
         this.command = "curl --tlsv1.1 -i";
         this.command += " " + this.getCurlProxyParam();
-        this.addHeader("user-agent", this.options.userAgent);
         this.addHeader("accept-language", this.options.lang);
-        this.addHeader("content-type", "text/plain;charset=UTF-8");
-        this.addHeader("accept", "application/json");
+        this.addHeader("user-agent", this.options.userAgent);
+        //this.addHeader("content-type", "text/plain;charset=UTF-8");
+        //this.addHeader("accept", "application/json");
         return this;
     };
     Request.prototype.addHeader = function (headerName, headerValue) {
