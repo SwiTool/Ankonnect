@@ -72,6 +72,7 @@ var Account = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_CREATE_GUEST)
+                            .asJson()
                             .addParams(params)
                             .run()];
                     case 1:
@@ -103,6 +104,7 @@ var Account = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_CREATE_TOKEN)
+                            .asJson()
                             .addParams(params)
                             .addHeader("apikey", haapiKey)
                             .run()];

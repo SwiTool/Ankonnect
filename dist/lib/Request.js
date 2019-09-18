@@ -52,6 +52,7 @@ var Request = /** @class */ (function () {
         this.qs = {};
         this.method = "GET";
         this.endpoint = "";
+        this.returnAsJson = false;
     }
     Request.prototype.clear = function () {
         this.command = "";
@@ -59,6 +60,7 @@ var Request = /** @class */ (function () {
         this.qs = {};
         this.method = "GET";
         this.endpoint = "";
+        this.returnAsJson = false;
     };
     Request.prototype.init = function (method, endpoint) {
         this.method = method;
@@ -69,6 +71,10 @@ var Request = /** @class */ (function () {
         this.addHeader("user-agent", this.options.userAgent);
         //this.addHeader("content-type", "text/plain;charset=UTF-8");
         //this.addHeader("accept", "application/json");
+        return this;
+    };
+    Request.prototype.asJson = function () {
+        this.returnAsJson = true;
         return this;
     };
     Request.prototype.addHeader = function (headerName, headerValue) {
@@ -179,7 +185,7 @@ var Request = /** @class */ (function () {
             var response = {
                 headers: headers,
                 statusCode: statusCode,
-                body: JSON.parse(rawResp)
+                body: this.returnAsJson ? JSON.parse(rawResp) : rawResp
             };
             if (helpers_1.isGenericErrorBody(response.body)) {
                 log_1.default(response.statusCode + ": " + response.body.message);
