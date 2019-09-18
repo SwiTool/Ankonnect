@@ -196,7 +196,7 @@ export default class Request {
       }
       param += "@";
     }
-    param += `${proxy.host}:${proxy.port}`;
+    param += `${proxy.hostname}:${proxy.port ? proxy.port : 80}`;
     return param;
   }
 }

@@ -105,7 +105,12 @@ var Request = /** @class */ (function () {
         return this;
     };
     Request.prototype.buildUrl = function () {
-        this.command += " " + this.options.baseUrl + this.endpoint;
+        if (this.endpoint.indexOf("://") === -1) {
+            this.command += " " + this.options.baseUrl + this.endpoint;
+        }
+        else {
+            this.command += " " + this.endpoint;
+        }
         var first = true;
         for (var qName in this.qs) {
             var qValue = this.qs[qName];
