@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var GenericError = /** @class */ (function (_super) {
     __extends(GenericError, _super);
     function GenericError() {
@@ -20,4 +20,4 @@ var GenericError = /** @class */ (function (_super) {
     }
     return GenericError;
 }(Error));
-exports["default"] = GenericError;
+exports.default = GenericError;

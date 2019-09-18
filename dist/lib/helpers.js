@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 function isGenericErrorBody(val) {
     return "message" in val && "status" in val;
 }

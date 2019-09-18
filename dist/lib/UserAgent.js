@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var UserAgent = /** @class */ (function () {
     function UserAgent() {
         //
@@ -76,4 +76,4 @@ var UserAgent = /** @class */ (function () {
     ];
     return UserAgent;
 }());
-exports["default"] = UserAgent;
+exports.default = UserAgent;

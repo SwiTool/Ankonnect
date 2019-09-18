@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var GuestError = /** @class */ (function (_super) {
     __extends(GuestError, _super);
     function GuestError() {
@@ -20,4 +20,4 @@ var GuestError = /** @class */ (function (_super) {
     }
     return GuestError;
 }(Error));
-exports["default"] = GuestError;
+exports.default = GuestError;

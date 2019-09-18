@@ -34,12 +34,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 var child_process_1 = require("child_process");
 var helpers_1 = require("./helpers");
-var GenericError_1 = require("./errors/GenericError");
-var LoginError_1 = require("./errors/LoginError");
-var log_1 = require("./log");
+var GenericError_1 = __importDefault(require("./errors/GenericError"));
+var LoginError_1 = __importDefault(require("./errors/LoginError"));
+var log_1 = __importDefault(require("./log"));
 var Request = /** @class */ (function () {
     function Request(options) {
         this.options = options;
@@ -59,7 +62,7 @@ var Request = /** @class */ (function () {
     Request.prototype.init = function (method, endpoint) {
         this.method = method;
         this.endpoint = endpoint;
-        this.command = "curl --compressed -i";
+        this.command = "curl --tlsv1.1 -i";
         this.command += " " + this.getCurlProxyParam();
         this.addHeader("user-agent", this.options.userAgent);
         this.addHeader("accept-language", this.options.lang);
@@ -118,7 +121,7 @@ var Request = /** @class */ (function () {
                 }
                 this.buildParams();
                 this.buildUrl();
-                log_1["default"](this.command);
+                log_1.default(this.command);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         child_process_1.exec(_this.command, function (err, stdout) {
                             _this.clear();
@@ -178,18 +181,18 @@ var Request = /** @class */ (function () {
                 body: JSON.parse(rawResp)
             };
             if (helpers_1.isGenericErrorBody(response.body)) {
-                log_1["default"](response.statusCode + ": " + response.body.message);
-                throw new GenericError_1["default"](response.body.message);
+                log_1.default(response.statusCode + ": " + response.body.message);
+                throw new GenericError_1.default(response.body.message);
             }
             if (helpers_1.isLoginError(response.body)) {
-                log_1["default"](response.statusCode + ": " + response.body.reason);
-                throw new LoginError_1["default"](response.body.reason);
+                log_1.default(response.statusCode + ": " + response.body.reason);
+                throw new LoginError_1.default(response.body.reason);
             }
             return response;
         }
         catch (e) {
             if (e instanceof SyntaxError) {
-                log_1["default"]("" + rawResp);
+                log_1.default("" + rawResp);
                 throw new SyntaxError(e.message + ": " + rawResp);
             }
             throw e;
@@ -212,4 +215,4 @@ var Request = /** @class */ (function () {
     };
     return Request;
 }());
-exports["default"] = Request;
+exports.default = Request;

@@ -1,14 +1,24 @@
 "use strict";
-exports.__esModule = true;
-var url = require("url");
-var UserAgent_1 = require("./lib/UserAgent");
-var Api_1 = require("./lib/models/Api");
-var Account_1 = require("./lib/models/Account");
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var url = __importStar(require("url"));
+var UserAgent_1 = __importDefault(require("./lib/UserAgent"));
+var Api_1 = __importDefault(require("./lib/models/Api"));
+var Account_1 = __importDefault(require("./lib/models/Account"));
 var Ankonnect = /** @class */ (function () {
     function Ankonnect(options) {
         this.options = {
             baseUrl: "https://haapi.ankama.com/json/Ankama/v2",
-            userAgent: UserAgent_1["default"].getRandomUserAgent(),
+            userAgent: UserAgent_1.default.getRandomUserAgent(),
             lang: "fr",
             proxy: null
         };
@@ -21,8 +31,8 @@ var Ankonnect = /** @class */ (function () {
             proxy: this.initProxy(options ? options.proxy : null)
         };
         this.options = opts;
-        this.Api = new Api_1["default"](this.options);
-        this.Account = new Account_1["default"](this.options);
+        this.Api = new Api_1.default(this.options);
+        this.Account = new Account_1.default(this.options);
     }
     Ankonnect.prototype.initProxy = function (proxy) {
         if (typeof proxy === "string") {
@@ -38,4 +48,4 @@ var Ankonnect = /** @class */ (function () {
     };
     return Ankonnect;
 }());
-exports["default"] = Ankonnect;
+exports.default = Ankonnect;
