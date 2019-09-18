@@ -91,7 +91,11 @@ export default class Request {
   }
 
   public buildUrl() {
-    this.command += ` ${this.options.baseUrl}${this.endpoint}`;
+    if (this.endpoint.indexOf("://") === -1) {
+      this.command += ` ${this.options.baseUrl}${this.endpoint}`;
+    } else {
+      this.command += ` ${this.endpoint}`;
+    }
     let first = true;
     for (const qName in this.qs) {
       const qValue = this.qs[qName];

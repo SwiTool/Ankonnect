@@ -89,7 +89,7 @@ var Account = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.init("POST", endpoints.EP_VALIDATE_GUEST)
+                        return [4 /*yield*/, this.init("GET", endpoints.EP_VALIDATE_GUEST)
                                 .addParams(params)
                                 .run()];
                     case 1:
