@@ -72,7 +72,6 @@ var Api = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.init("POST", endpoints.EP_CREATE_API_KEY)
-                            .asJson()
                             .addParams(params)
                             .run()];
                     case 1:

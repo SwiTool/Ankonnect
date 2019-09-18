@@ -72,7 +72,6 @@ var Account = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_CREATE_GUEST)
-                            .asJson()
                             .addParams(params)
                             .run()];
                     case 1:
@@ -85,15 +84,24 @@ var Account = /** @class */ (function (_super) {
     };
     Account.prototype.validateGuest = function (params) {
         return __awaiter(this, void 0, void 0, function () {
-            var response;
+            var response, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.init("POST", endpoints.EP_VALIDATE_GUEST)
-                            .addParams(params)
-                            .run()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.init("POST", endpoints.EP_VALIDATE_GUEST)
+                                .addParams(params)
+                                .run()];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.body];
+                    case 2:
+                        e_1 = _a.sent();
+                        if (!(e_1 instanceof SyntaxError)) {
+                            throw e_1;
+                        }
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/, {}];
                 }
             });
         });
@@ -104,7 +112,6 @@ var Account = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_CREATE_TOKEN)
-                            .asJson()
                             .addParams(params)
                             .addHeader("apikey", haapiKey)
                             .run()];
