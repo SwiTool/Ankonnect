@@ -122,6 +122,21 @@ var Account = /** @class */ (function (_super) {
             });
         });
     };
+    Account.prototype.registerOpenRequest = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_REGISTER_OPEN_REQUEST)
+                            .addParam("lang", this.options.lang)
+                            .run()];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, response.body];
+                }
+            });
+        });
+    };
     return Account;
 }(Request_1.default));
 exports.default = Account;
