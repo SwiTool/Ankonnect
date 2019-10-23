@@ -2,6 +2,7 @@ import * as endpoints from "../endpoints";
 import Request from "../Request";
 import { CreateGuestRequest, CreateGuestResponse } from "../types/CreateGuest";
 import { CreateTokenRequest, CreateTokenResponse } from "../types/CreateToken";
+import { RegisterOpenResponse } from "../types/RegisterOpen";
 import {
   ValidateGuestRequest,
   ValidateGuestResponse
@@ -35,6 +36,13 @@ export default class Account extends Request {
       .addParams(params)
       .addHeader("apikey", haapiKey)
       .run<CreateTokenResponse>();
+    return response.body;
+  }
+
+  public async registerOpenRequest() {
+    const response = await this.init("GET", endpoints.EP_REGISTER_OPEN_REQUEST)
+      .addParam("lang", this.options.lang)
+      .run<RegisterOpenResponse>();
     return response.body;
   }
 }

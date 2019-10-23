@@ -216,7 +216,7 @@ var Request = /** @class */ (function () {
             }
             param += "@";
         }
-        param += proxy.host + ":" + proxy.port;
+        param += proxy.hostname + ":" + (proxy.port ? proxy.port : 80);
         return param;
     };
     return Request;

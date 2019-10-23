@@ -4,3 +4,5 @@ export const EP_CREATE_GUEST = "/Account/CreateGuest";
 //export const EP_VALIDATE_GUEST = "/Account/ValidateGuest";
 export const EP_VALIDATE_GUEST =
   "https://proxyconnection.touch.dofus.com/haapi/validateGuest";
+export const EP_REGISTER_OPEN_REQUEST =
+  "https://proxyconnection.touch.dofus.com/haapi/registerOpenRequest";
