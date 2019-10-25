@@ -147,8 +147,16 @@ export default class Request {
     let statusCode = 0;
     const stdoutClean = stdout.replace(/(\r\n|\n|\r)/gm, "\n");
     const splitted = stdoutClean.split("\n\n"); // body is separated from headers by 2 \n
-    const rawHeaders = splitted[0];
-    const rawResp = splitted[1];
+    let rawHeaders;
+    let rawResp;
+    if (splitted[2]) {
+      // through proxy
+      rawHeaders = splitted[1];
+      rawResp = splitted[2];
+    } else {
+      rawHeaders = splitted[0];
+      rawResp = splitted[1];
+    }
     const tmpHeaders = rawHeaders.split("\n");
     const rawStatusCode = tmpHeaders.shift();
     for (const head of tmpHeaders) {

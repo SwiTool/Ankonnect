@@ -17,10 +17,12 @@ export default class Account extends Request {
     return response.body;
   }
 
-  public async validateGuest(params: ValidateGuestRequest) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async validateGuest(params: ValidateGuestRequest, headers: any = {}) {
     try {
       const response = await this.init("GET", endpoints.EP_VALIDATE_GUEST)
         .addParams(params)
+        .addHeaders(headers)
         .run<ValidateGuestResponse>();
       return response.body;
     } catch (e) {
