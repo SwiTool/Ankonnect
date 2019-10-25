@@ -165,8 +165,17 @@ var Request = /** @class */ (function () {
         var statusCode = 0;
         var stdoutClean = stdout.replace(/(\r\n|\n|\r)/gm, "\n");
         var splitted = stdoutClean.split("\n\n"); // body is separated from headers by 2 \n
-        var rawHeaders = splitted[0];
-        var rawResp = splitted[1];
+        var rawHeaders;
+        var rawResp;
+        if (splitted[2]) {
+            // through proxy
+            rawHeaders = splitted[1];
+            rawResp = splitted[2];
+        }
+        else {
+            rawHeaders = splitted[0];
+            rawResp = splitted[1];
+        }
         var tmpHeaders = rawHeaders.split("\n");
         var rawStatusCode = tmpHeaders.shift();
         for (var _i = 0, tmpHeaders_1 = tmpHeaders; _i < tmpHeaders_1.length; _i++) {

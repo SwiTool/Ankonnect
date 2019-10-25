@@ -82,7 +82,9 @@ var Account = /** @class */ (function (_super) {
             });
         });
     };
-    Account.prototype.validateGuest = function (params) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Account.prototype.validateGuest = function (params, headers) {
+        if (headers === void 0) { headers = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var response, e_1;
             return __generator(this, function (_a) {
@@ -91,6 +93,7 @@ var Account = /** @class */ (function (_super) {
                         _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.init("GET", endpoints.EP_VALIDATE_GUEST)
                                 .addParams(params)
+                                .addHeaders(headers)
                                 .run()];
                     case 1:
                         response = _a.sent();
