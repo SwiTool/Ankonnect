@@ -66,13 +66,16 @@ var Account = /** @class */ (function (_super) {
     function Account() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Account.prototype.createGuest = function (params) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Account.prototype.createGuest = function (params, headers) {
+        if (headers === void 0) { headers = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.init("GET", endpoints.EP_CREATE_GUEST)
                             .addParams(params)
+                            .addHeaders(headers)
                             .run()];
                     case 1:
                         response = _a.sent();

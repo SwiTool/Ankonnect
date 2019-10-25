@@ -9,9 +9,11 @@ import {
 } from "../types/ValidateGuest";
 
 export default class Account extends Request {
-  public async createGuest(params: CreateGuestRequest) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async createGuest(params: CreateGuestRequest, headers: any = {}) {
     const response = await this.init("GET", endpoints.EP_CREATE_GUEST)
       .addParams(params)
+      .addHeaders(headers)
       .run<CreateGuestResponse>();
     response.body.password = response.headers["x-password"];
     return response.body;
